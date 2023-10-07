@@ -17,6 +17,6 @@ export const additionalDatasets = [
     },
     {
 
-        userTotal: 4300 + 2340,
+        userTotal: 24300 + 22340,
     },
 ];
