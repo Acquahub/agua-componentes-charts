@@ -5,11 +5,16 @@ import MultiAxisLineChart from "./components/MultiAxisLineChart";
 import StackedBarChart from "./components/StackedBarChart";
 import BubbleChart from "./components/BubbleChart";
 import DoughnutChart from "./components/DoughnutChart";
+import PieChart from "./components/PieChart";
+import PolarCenteredChard from "./components/PolarCenteredChard";
 
 
 
 import {UserData} from "./data/Data";
 import {additionalDatasets} from "./data/additionalDatasets";
+import RadarChart from "./components/RadarChart";
+
+
 
 
 
@@ -272,7 +277,7 @@ function App() {
             />
         </div>*/}
 
-        <div>
+        {/*<div>
             <DoughnutChart
               data={{labels: UserData.map((element) => element.year)}}
               title={'Users Gained'}
@@ -291,7 +296,86 @@ function App() {
               colorLabel={'rgba(0,0,0,0.61)'}
               />
 
-      </div>
+      </div>*/}
+
+        {/*<div>
+              <PieChart
+                  data={{labels: UserData.map((element) => element.year)}}
+                  title={'Users Gained'}
+                  datasets={[
+                      {
+                          label: 'Users Gained',
+                          data: UserData.map((element) => element.userGain),
+                          backgroundColor : UserData.map((element) => element.backgroundColor),
+                      },
+                  ]}
+                  borderColor={'black'}
+                  borderWidth={2}
+                  borderColors={'black'}
+                  hoverOffset={20}
+                  colorTitle={'black'}
+                  positionLabel={'bottom'}
+                  colorLabel={'rgba(0,0,0,0.61)'}
+              />
+
+          </div>*/}
+
+        {/*<div>
+              <PolarCenteredChard
+                  data={{labels: UserData.map((element) => element.year)}}
+                  title={'Users Gained'}
+                  datasets={[
+                      {
+                          label: 'Users Gained',
+                          data: UserData.map((element) => element.userGain),
+                          backgroundColor : UserData.map((element) => element.backgroundColor),
+                      },
+                  ]}
+                  borderColor={'black'}
+                  borderWidth={0}
+                  hoverOffset={5    }
+                  colorTitle={'black'}
+                  positionLabel={'bottom'}
+                  colorLabel={'rgba(0,0,0,0.61)'}
+              />
+
+          </div>*/}
+
+        <div>
+              <RadarChart
+                  data={{labels: UserData.map((element) => element.year)}}
+                  title={'Users Gained'}
+                  datasets={[
+                      {
+                          label: 'Users Gained',
+                          data: UserData.map((element) => element.userGain),
+                          backgroundColor : 'rgba(108,231,228,0.57)',
+                            borderColor : 'rgb(108,231,228)',
+                          borderWidth : 2,
+                      },
+                      {
+                          label: 'Users Lost',
+                          data: UserData.map((element) => element.userLost),
+                          backgroundColor: 'rgba(255,99,132,0.57)',
+                            borderColor: 'rgb(255,99,132)',
+                          borderWidth: 2,
+
+                      },
+                      {
+                          label: 'Total Users',
+                          data: additionalDatasets.map((element) => element.userTotal),
+                          backgroundColor: 'rgba(255,205,86,0.6)',
+                          borderColor: 'rgb(255,205,86)',
+                          borderWidth: 2,
+                      },
+                  ]}
+                  colorTitle={'black'}
+                  colorLabel={'rgba(0,0,0,0.61)'}
+              />
+
+          </div>
+
+
 
 
       </div>
