@@ -3,56 +3,43 @@ import {Pie} from 'react-chartjs-2';
 import {Chart as ChartJS} from 'chart.js/auto';
 
 function PieChart({
-                           data,
-                           datasets,
-                           label = "item",
-                           positionLabel = 'top',
-                           colorLabel = 'rgba(0,0,0,0.2)',
-                           sizeLabel = 12,
-                           styleLabel = "normal",
-                           weightLabel = "bold",
-                           displayTitle = true,
-                           title = "title",
-                           positionTitle = 'top',
-                           styleTitle = "normal",
-                           weightTitle = "bold",
-                           colorTitle = 'rgba(110,110,110,0.33)',
-                           fontTitle = ChartJS.defaults.font.family,
-                           sizeTitle = 12,
-                           backgroundColor = '',
-                           borderColor = '',
-                           borderWidth = '',
-                           hoverOffset = 5,
-                           width = "80vw",
-                           height = "80vh",
-                           fontFamily = ChartJS.defaults.font.family,
-                           displayLegend = true,
+                      labels,
+                      datasets,
+                      label = ['item'],
+                      positionLabel = 'top',
+                      colorLabel = 'rgba(0,0,0,0.2)',
+                      sizeLabel = 12,
+                      styleLabel = "normal",
+                      weightLabel = "bold",
+                      displayTitle = true,
+                      title = "title",
+                      positionTitle = 'top',
+                      styleTitle = "normal",
+                      weightTitle = "bold",
+                      colorTitle = 'rgba(110,110,110,0.33)',
+                      fontTitle = ChartJS.defaults.font.family,
+                      sizeTitle = 12,
+                      backgroundColor = '',
+                      borderColor = '',
+                      borderWidth = '',
+                      hoverOffset = 5,
+                      width = "80vw",
+                      height = "80vh",
+                      fontFamily = ChartJS.defaults.font.family,
+                      displayLegend = true,
                        }) {
 
     const [chart, setChart] = useState({
-        labels: data.labels,
-        datasets: datasets.map((dataset) => ({
-            label: dataset.label || label,
-            data: dataset.data,
-            backgroundColor: dataset.backgroundColor || backgroundColor,
-            borderColor: dataset.borderColor || borderColor,
-            borderWidth: dataset.borderWidth || borderWidth,
+        labels: labels,
+        datasets: datasets.map((element, index) => ({
+            label: label[index] || label,
+            data: element,
+            backgroundColor: backgroundColor,
+            borderColor: borderColor,
+            borderWidth: borderWidth,
         })),
     });
 
-    useEffect (() => {
-        const updateChart = {
-            labels: data.labels,
-            datasets: datasets.map((dataset) => ({
-                label: dataset.label || label,
-                data: dataset.data,
-                backgroundColor: dataset.backgroundColor || backgroundColor,
-                borderColor: dataset.borderColor || borderColor,
-                borderWidth: dataset.borderWidth || borderWidth,
-            })),
-        };
-        setChart(updateChart);
-    }, [data, datasets, label, backgroundColor, borderColor, borderWidth]);
 
     const options = {
         responsive: true,

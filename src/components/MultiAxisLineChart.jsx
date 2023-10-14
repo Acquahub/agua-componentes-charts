@@ -5,9 +5,9 @@ import {Line} from "react-chartjs-2";
 
 
 function MultiAxisLineChart({
-                       data,
+                       labels,
                        datasets,
-                       label = "item",
+                       label = (index) => `Item ${index + 1}`,
                        positionLabel = 'top',
                        colorLabel = 'rgba(0,0,0,0.2)',
                        sizeLabel = 12,
@@ -21,7 +21,7 @@ function MultiAxisLineChart({
                        colorTitle = 'rgba(110,110,110,0.33)',
                        fontTitle = ChartJS.defaults.font.family,
                        sizeTitle = 12,
-                       backgroundColor = 'rgb(108 231 228)',
+                       backgroundColor = ['rgba(108,231,228,0.51)'],
                        borderColor = 'black',
                        borderWidth = 2,
                        width = "80vw",
@@ -39,64 +39,37 @@ function MultiAxisLineChart({
                        ymin = null,
 
                        //props linear chart
-                       pointRadius = 5,
-                       tension = 0,
-                       fill = false,
-                       pointBorderColor = 'rgba(110,110,110,0.65)',
-                       pointBackgroundColor = 'rgba(0,0,0,0.2)',
-                       displayY1 = false,
+                       pointRadius = [5],
+                       tension = [0],
+                       fill = [false],
+                       pointBorderColor = ['rgba(110,110,110,0.65)'],
+                       pointBackgroundColor = ['rgba(0,188,255,0.86)'],
+                       displayY1 = true,
                        displayX1 = false,
                        labely1 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'],
-                       yAxisID = 'y',
-                       xAxisID = 'x',
+                       labelx1 = ['A', 'B', 'C', 'D', 'E']
 
                    }) {
 
 
 
-
-
     const [chart, setChart] = useState({
-        labels: data.labels,
-        datasets: datasets.map((dataset) => ({
-            label: dataset.label || label,
-            data: dataset.data,
-            backgroundColor: dataset.backgroundColor || backgroundColor,
-            borderColor: dataset.borderColor || borderColor,
-            borderWidth: dataset.borderWidth || borderWidth,
-            pointRadius: dataset.pointRadius || pointRadius,
-            tension: dataset.tension || tension,
-            fill: dataset.fill || fill,
-            pointBorderColor: dataset.pointBorderColor || pointBorderColor,
-            pointBackgroundColor: dataset.pointBackgroundColor || pointBackgroundColor,
-            yAxisID: yAxisID,
-            xAxisID: xAxisID
-
+        labels: labels,
+        datasets: datasets.map((element, index) => ({
+            label: label[index] || label(index),
+            data: element,
+            backgroundColor: backgroundColor[index] || backgroundColor,
+            borderColor: borderColor[index] || borderColor,
+            borderWidth: borderWidth[index] || borderWidth,
+            pointRadius: pointRadius[index] || pointRadius,
+            tension: tension[index] || tension,
+            fill: fill[index] || fill,
+            pointBorderColor: pointBorderColor[index] || pointBorderColor,
+            pointBackgroundColor: pointBackgroundColor[index] || pointBackgroundColor,
 
         })),
     });
 
-    useEffect(() => {
-        const updatedChart = {
-            labels: data.labels,
-            datasets: datasets.map((dataset) => ({
-                label: dataset.label || label,
-                data: dataset.data,
-                backgroundColor: dataset.backgroundColor || backgroundColor,
-                borderColor: dataset.borderColor || borderColor,
-                borderWidth: dataset.borderWidth || borderWidth,
-                pointRadius: dataset.pointRadius || pointRadius,
-                tension: dataset.tension || tension,
-                fill: dataset.fill || fill,
-                pointBorderColor: dataset.pointBorderColor || pointBorderColor,
-                pointBackgroundColor: dataset.pointBackgroundColor || pointBackgroundColor,
-                yAxisID: yAxisID,
-                xAxisID: xAxisID
-            })),
-        };
-        setChart(updatedChart);
-
-    } , [data, datasets, label, backgroundColor, borderColor, borderWidth, pointRadius, tension, fill, yAxisID, xAxisID, pointBorderColor, pointBackgroundColor]);
 
     const options = {
         responsive: true,
@@ -163,7 +136,8 @@ function MultiAxisLineChart({
 
             },
             x1: {
-                type: 'linear',
+                type: 'category',
+                labels: labelx1,
                 display: displayX1,
                 position: 'top',
                 ticks: {

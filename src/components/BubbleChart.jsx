@@ -3,9 +3,9 @@ import {Bubble} from 'react-chartjs-2';
 import {Chart as ChartJS} from 'chart.js/auto';
 
 function BubbleChart({
-                         data,
+                         labels,
                          datasets,
-                         label = "item",
+                         label = (index) => `Item ${index + 1}`,
                          positionLabel = 'top',
                          colorLabel = 'rgba(0,0,0,0.2)',
                          sizeLabel = 12,
@@ -34,46 +34,29 @@ function BubbleChart({
                          ymax = null,
                          ymin = null,
                          //props BubbleChart
-                         pointStyle = 'circle',
+                         pointStyle = 'rectRot',
                          pointRadius = 5,
-                         pointBorderColor = 'rgba(110,110,110,0.65)',
-                         pointBackgroundColor = 'rgba(0,0,0,0.2)',
+                         pointBorderColor = ["rgba(110,110,110,0.65)"],
+                         pointBackgroundColor = ["rgba(9,210,203,0.2)"]
 
                      }) {
 
-
-
     const [chart, setChart] = useState({
-        labels: data.labels,
-        datasets: datasets.map((dataset) => ({
-            label: dataset.label || label,
-            data: dataset.data,
-            borderWidth: dataset.borderWidth || borderWidth,
-            pointRadius: dataset.pointRadius || pointRadius,
-            pointBorderColor: dataset.pointBorderColor || pointBorderColor,
-            pointBackgroundColor: dataset.pointBackgroundColor || pointBackgroundColor,
-            pointStyle: dataset.pointStyle || pointStyle,
+        labels: labels,
+        datasets: datasets.map((element, index) => ({
+            label: label[index] || label(index),
+            data: element,
+            borderWidth: borderWidth[index] || borderWidth,
+            pointRadius: pointRadius[index] || pointRadius,
+            pointBorderColor: pointBorderColor[index] || pointBorderColor,
+            pointBackgroundColor: pointBackgroundColor[index] || pointBackgroundColor,
+            pointStyle: pointStyle[index] || pointStyle,
 
 
 
         })),
     });
 
-    useEffect(() => {
-        const updatedChart = {
-            labels: data.labels,
-            datasets: datasets.map((dataset) => ({
-                label: dataset.label || label,
-                data: dataset.data,
-                borderWidth: dataset.borderWidth || borderWidth,
-                pointRadius: dataset.pointRadius || pointRadius,
-                pointBorderColor: dataset.pointBorderColor || pointBorderColor,
-                pointBackgroundColor: dataset.pointBackgroundColor || pointBackgroundColor,
-            })),
-        };
-        setChart(updatedChart);
-
-    } , [data, datasets, label, borderWidth, pointRadius, pointBorderColor, pointBackgroundColor]);
 
 
     const options = {

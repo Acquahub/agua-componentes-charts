@@ -3,9 +3,9 @@ import {Doughnut} from 'react-chartjs-2';
 import {Chart as ChartJS} from 'chart.js/auto';
 
 function DoughnutChart({
-                           data,
+                           labels,
                            datasets,
-                           label = "item",
+                           label = ['item'],
                            positionLabel = 'top',
                            colorLabel = 'rgba(0,0,0,0.2)',
                            sizeLabel = 12,
@@ -26,74 +26,25 @@ function DoughnutChart({
                            width = "80vw",
                            height = "80vh",
                            fontFamily = ChartJS.defaults.font.family,
-                           fontWeighty = "normal",
-                           fontWeightx = "normal",
-                           fontStylex = "normal",
-                           fontStyley = "normal",
-                           colorFontx = 'rgb(110,110,110)',
-                           colorFonty = 'rgb(110,110,110)',
-                           xAxisFontSize = 14,
                            displayLegend = true,
-                           ymax = null,
-                           ymin = null,
                        }) {
 
     const [chart, setChart] = useState({
-        labels: data.labels,
-        datasets: datasets.map((dataset) => ({
-            label: dataset.label || label,
-            data: dataset.data,
-            backgroundColor: dataset.backgroundColor || backgroundColor,
-            borderColor: dataset.borderColor || borderColor,
-            borderWidth: dataset.borderWidth || borderWidth,
+        labels: labels,
+        datasets: datasets.map((element, index) => ({
+            label: label[index] || label,
+            data: element,
+            backgroundColor: backgroundColor,
+            borderColor: borderColor,
+            borderWidth: borderWidth,
         })),
     });
-
-    useEffect (() => {
-        const updateChart = {
-            labels: data.labels,
-            datasets: datasets.map((dataset) => ({
-                label: dataset.label || label,
-                data: dataset.data,
-                backgroundColor: dataset.backgroundColor || backgroundColor,
-                borderColor: dataset.borderColor || borderColor,
-                borderWidth: dataset.borderWidth || borderWidth,
-            })),
-        };
-        setChart(updateChart);
-    }, [data, datasets, label, backgroundColor, borderColor, borderWidth]);
 
     const options = {
         responsive: true,
         maintainAspectRatio: false,
         hoverOffset: hoverOffset,
-        scales: {
-            y: {
-                min: ymin,
-                max: ymax,
-                ticks: {
-                    color: colorFonty,
-                    font: {
-                        family: fontFamily,
-                        size: xAxisFontSize,
-                        weight: fontWeighty,
-                        style: fontStyley,
-                    }
-                }
-            },
-            x: {
-                ticks: {
-                    color: colorFontx,
-                    font: {
-                        family: fontFamily,
-                        size: xAxisFontSize,
-                        weight: fontWeightx,
-                        style: fontStylex,
-                    }
-                }
 
-            }
-        },
         plugins: {
             legend: {
                 display: displayLegend,

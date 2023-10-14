@@ -3,9 +3,9 @@ import { Pie } from 'react-chartjs-2';
 import {Chart as ChartJS} from 'chart.js/auto';
 
 function MultiSeriesPieChart({
-                                 data,
+                                 labels,
                                  datasets,
-                                 label = "item",
+                                 label = ['item'],
                                  positionLabel = 'top',
                                  colorLabel = 'rgba(0,0,0,0.2)',
                                  sizeLabel = 12,
@@ -21,32 +21,56 @@ function MultiSeriesPieChart({
                                  sizeTitle = 12,
                                  backgroundColor = '',
                                  borderColor = '',
-                                 borderWidth = '',
+                                 borderWidth = '1',
                                  hoverOffset = 5,
                                  width = "80vw",
                                  height = "80vh",
                                  fontFamily = ChartJS.defaults.font.family,
                                  displayLegend = true,
                              }) {
-    // Datos de ejemplo
+
     const chartData = {
-        labels: data.labels, // Etiquetas para cada serie
-        datasets: data.datasets.map((series) => ({
-            data: series.data, // Valores para cada serie
-            backgroundColor: series.backgroundColor, // Color para cada serie
+        labels: labels,
+        datasets: datasets.map((element, index) => ({
+            label: label[index] || label,
+            data: element,
+            backgroundColor: backgroundColor[index] || backgroundColor,
+            borderColor: borderColor[index] || borderColor,
+            borderWidth: borderWidth[index] || borderWidth,
         })),
     };
 
     const options = {
         responsive: true,
         maintainAspectRatio: false,
-        // Otras opciones de configuración según tus necesidades
-        tooltips: {
-            callbacks: {
-                label: function(item, data) {
-                    console.log(data.labels, item);
-                    return data.datasets[item.datasetIndex].label+ ": "+ data.labels[item.index]+ ": "+ data.datasets[item.datasetIndex].data[item.index];
+        hoverOffset: hoverOffset,
+        plugins: {
+            legend: {
+                display: displayLegend,
+                position: positionLabel,
+                labels: {
+                    color: colorLabel,
+                    font: {
+                        family: fontFamily,
+                        size: sizeLabel,
+                        style: styleLabel,
+                        weight: weightLabel,
+                    }
                 }
+
+            },
+            title: {
+                display: displayTitle,
+                text: title,
+                position: positionTitle,
+                color: colorTitle,
+                font: {
+                    family: fontTitle,
+                    size: sizeTitle,
+                    style: styleTitle,
+                    weight: weightTitle,
+                }
+
             }
         }
     };

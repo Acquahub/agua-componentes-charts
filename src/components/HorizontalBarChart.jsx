@@ -3,9 +3,9 @@ import {Bar} from 'react-chartjs-2';
 import {Chart as ChartJS} from 'chart.js/auto';
 
 function HorizontalBarChart({
-                      data,
+                      labels,
                       datasets,
-                      label = "item",
+                      label = (index) => `Item ${index + 1}`,
                       positionLabel = 'top',
                       colorLabel = 'rgba(0,0,0,0.2)',
                       sizeLabel = 12,
@@ -19,8 +19,8 @@ function HorizontalBarChart({
                       colorTitle = 'rgba(110,110,110,0.33)',
                       fontTitle = ChartJS.defaults.font.family,
                       sizeTitle = 12,
-                      backgroundColor = 'rgb(108 231 228)',
-                      borderColor = 'black',
+                      backgroundColor = ['rgb(108 231 228)'],
+                      borderColor = ['black'],
                       borderWidth = 2,
                       borderRadius = 5,
                       borderSkipped = false,
@@ -41,33 +41,19 @@ function HorizontalBarChart({
                   }) {
 
     const [chart, setChart] = useState({
-        labels: data.labels,
-        datasets: datasets.map((dataset) => ({
-            label: dataset.label || label,
-            data: dataset.data,
-            backgroundColor: dataset.backgroundColor || backgroundColor,
-            borderColor: dataset.borderColor || borderColor,
-            borderWidth: dataset.borderWidth || borderWidth,
-            borderRadius: dataset.borderRadius || borderRadius,
-            borderSkipped: dataset.borderSkipped || borderSkipped,
+        labels: labels,
+        datasets: datasets.map((element, index) => ({
+            label: label[index] || label(index),
+            data: element,
+            backgroundColor: backgroundColor[index] || backgroundColor,
+            borderColor: borderColor[index] || borderColor,
+            borderWidth: borderWidth[index] || borderWidth,
+            borderRadius: borderRadius[index] || borderRadius,
+            borderSkipped: borderSkipped[index] || borderSkipped,
         })),
     });
 
-    useEffect(() => {
-        const updatedChart = {
-            labels: data.labels,
-            datasets: datasets.map((dataset) => ({
-                label: dataset.label || label,
-                data: dataset.data,
-                backgroundColor: dataset.backgroundColor || backgroundColor,
-                borderColor: dataset.borderColor || borderColor,
-                borderWidth: dataset.borderWidth || borderWidth,
-                borderRadius: dataset.borderRadius || borderRadius,
-                borderSkipped: dataset.borderSkipped || borderSkipped,
-            })),
-        };
-        setChart(updatedChart);
-    }, [data, datasets, label, backgroundColor, borderColor, borderWidth, borderRadius, borderSkipped]);
+
 
     const options = {
         indexAxis: 'y',
